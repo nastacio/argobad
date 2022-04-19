@@ -1,0 +1,16 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: adapter-config
+  namespace: myworkload
+data:
+  config.yaml: |-
+    "resourceRules":
+      "cpu":
+        "containerLabel": "container"
+        "containerQuery": |
+          sum by (<<.GroupBy>>) (
+            irate (
+                container_cpu_usage_seconds_total{<<.LabelMatchers>>,container!="",pod!=""}[4m]
+            )
+          )
