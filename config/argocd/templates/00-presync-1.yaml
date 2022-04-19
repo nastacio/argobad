@@ -23,5 +23,5 @@ spec:
               oc get Secret -n openshift-gitops
 
       restartPolicy: Never
-      serviceAccountName: openshift-gitops-argocd-application-controller
+      serviceAccountName: default
   backoffLimit: 2
