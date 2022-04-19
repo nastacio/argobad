@@ -8,7 +8,7 @@ metadata:
 spec:
   destination:
     name: ''
-    namespace: openshift-gitops
+    namespace: myworkload
     server: 'https://kubernetes.default.svc'
   source:
     path: config/argocd
