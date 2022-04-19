@@ -1,4 +1,4 @@
-# argohooks# argobad
+# argobad
 
 Example of application to add to Argo CD
 
@@ -12,19 +12,20 @@ metadata:
   namespace: openshift-gitops
 spec:
   destination:
-    namespace: openshift-gitops
-    server: https://kubernetes.default.svc
-  project: default
+    name: ''
+    namespace: myworkload
+    server: 'https://kubernetes.default.svc'
   source:
-    helm:
-      parameters:
     path: config/argocd
-    repoURL: https://github.com/nastacio/argobad
+    repoURL: 'https://github.com/nastacio/argobad'
     targetRevision: main
+  project: default
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
+      prune: false
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
 status:
   health: {}
   summary: {}
