@@ -75,17 +75,30 @@ spec:
 ### Local namespace
 
 ```yaml
-   
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "21"
+  creationTimestamp: null
+  name: argocd-namespace-admin
+  namespace: myworkload
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   creationTimestamp: null
   name: argo-bad-binding
+  namespace: myworkload
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: admin
+  name: argocd-namespace-admin
 subjects:
   - kind: ServiceAccount
     name: openshift-gitops-argocd-application-controller
@@ -100,10 +113,8 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "10"
   creationTimestamp: null
-  name: cp4d-cluster-roles
+  name: argo-bad-cluster-binding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -111,8 +122,5 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: default
-    namespace: ibm-common-services
-  - kind: ServiceAccount
-    name: "{{.Values.serviceaccount.argocd_application_controller}}"
-    namespace: "{{.Values.metadata.argocd_namespace}}"
+    namespace: myworkload
 ```
