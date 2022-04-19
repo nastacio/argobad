@@ -1,0 +1,28 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pre-sync-1
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/sync-wave: "1"
+  namespace: openshift-gitops
+spec:
+  template:
+    spec:
+      containers:
+        - name: config
+          image: quay.io/openshift/origin-cli:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eo pipefail
+              set -x
+              
+              sleep 120
+
+      restartPolicy: Never
+      serviceAccountName: default
+  backoffLimit: 2
