@@ -7,7 +7,7 @@ data:
   config.yaml: |-
     "resourceRules":
       "cpu":
-        "containerLabel": "containerd"
+        "containerLabel": "containerd123"
         "containerQuery": |
           sum by (<<.GroupBy>>) (
             irate (
