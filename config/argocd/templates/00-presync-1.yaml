@@ -5,7 +5,7 @@ metadata:
   name: sync-1
   annotations:
     argocd.argoproj.io/hook: Sync
-  namespace: openshift-gitops
+  namespace: myworkload
 spec:
   template:
     spec:
